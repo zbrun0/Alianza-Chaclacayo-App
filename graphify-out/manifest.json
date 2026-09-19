@@ -1,0 +1,757 @@
+{
+  "android/app/build.gradle.kts": {
+    "mtime": 1789784039.878573,
+    "ast_hash": "eb8f729838f9cd593fd6f8c807ad0823",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/kotlin/pe/alianzachaclacayo/alianza_chaclacayo_app/MainActivity.kt": {
+    "mtime": 1789784039.876573,
+    "ast_hash": "aa6c3148f6439bc9cac390cc712c50d7",
+    "semantic_hash": ""
+  },
+  "android/build.gradle.kts": {
+    "mtime": 1789784039.8797586,
+    "ast_hash": "f11f360aed44d4f6871b398346af14f0",
+    "semantic_hash": ""
+  },
+  "android/settings.gradle.kts": {
+    "mtime": 1789784039.9402387,
+    "ast_hash": "4440672748462857e9bdbbf5fd06fe1a",
+    "semantic_hash": ""
+  },
+  "ios/Runner/AppDelegate.swift": {
+    "mtime": 1789784039.949148,
+    "ast_hash": "2bd8469f2a4b701ff582f6574e58b13c",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": {
+    "mtime": 1789791648.137697,
+    "ast_hash": "cded7e7a58ed3f9e302fb50e14843b31",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json": {
+    "mtime": 1789784039.9412503,
+    "ast_hash": "770f4f65e02ca2fc57f46f4f4148d15d",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Runner-Bridging-Header.h": {
+    "mtime": 1789784039.9481063,
+    "ast_hash": "e07862ac930ed4d8479185d52c6cc66d",
+    "semantic_hash": ""
+  },
+  "ios/Runner/SceneDelegate.swift": {
+    "mtime": 1789784039.948908,
+    "ast_hash": "748d701e783e68faf618c00464257a19",
+    "semantic_hash": ""
+  },
+  "ios/RunnerTests/RunnerTests.swift": {
+    "mtime": 1789784039.9516075,
+    "ast_hash": "a225a382d14d7b16b6f602a5c1d49331",
+    "semantic_hash": ""
+  },
+  "lib/core/constants/app_constants.dart": {
+    "mtime": 1789784115.9577627,
+    "ast_hash": "040bbb561b0d9804e4a661049759fc11",
+    "semantic_hash": ""
+  },
+  "lib/core/theme/app_colors.dart": {
+    "mtime": 1789784376.3944588,
+    "ast_hash": "e3d1c0004936c1a716e51c7627b27408",
+    "semantic_hash": ""
+  },
+  "lib/core/theme/app_theme.dart": {
+    "mtime": 1789784141.7468894,
+    "ast_hash": "4c0616cab91cfdc7ebd60c67d37917cf",
+    "semantic_hash": ""
+  },
+  "lib/features/academia/presentation/academia_screen.dart": {
+    "mtime": 1789792693.804855,
+    "ast_hash": "89b08d28d33259329c53d74fd0d9f8b8",
+    "semantic_hash": ""
+  },
+  "lib/features/academia/presentation/asistencia_clase_screen.dart": {
+    "mtime": 1789791020.260057,
+    "ast_hash": "f9a321db9beeafefb0fd08211fae2eef",
+    "semantic_hash": ""
+  },
+  "lib/features/auth/data/auth_provider.dart": {
+    "mtime": 1789789937.8983738,
+    "ast_hash": "953453cc218d3e407b7eb89f8decd5aa",
+    "semantic_hash": ""
+  },
+  "lib/features/auth/data/user_model.dart": {
+    "mtime": 1789790060.6281927,
+    "ast_hash": "e0278d5b4d4c2968ce33db0272329ac4",
+    "semantic_hash": ""
+  },
+  "lib/features/auth/presentation/login_screen.dart": {
+    "mtime": 1789788556.86546,
+    "ast_hash": "53cef81e3d25b3e6dd5464abd69b0cc8",
+    "semantic_hash": ""
+  },
+  "lib/features/auth/presentation/register_screen.dart": {
+    "mtime": 1789788574.4834805,
+    "ast_hash": "7fdf267a42a5568b460dbdf70800be30",
+    "semantic_hash": ""
+  },
+  "lib/features/diezmos/presentation/diezmos_screen.dart": {
+    "mtime": 1789790141.5756679,
+    "ast_hash": "5300cedd44d741851e9dc8657b93928b",
+    "semantic_hash": ""
+  },
+  "lib/features/home/presentation/home_screen.dart": {
+    "mtime": 1789788656.473576,
+    "ast_hash": "78d53d0c75f5c6294e843f7a521f50fa",
+    "semantic_hash": ""
+  },
+  "lib/features/navigation/presentation/main_scaffold.dart": {
+    "mtime": 1789788649.577568,
+    "ast_hash": "5d62fdc13f9a86c0233e6377e819bde2",
+    "semantic_hash": ""
+  },
+  "lib/features/oracion/presentation/oracion_screen.dart": {
+    "mtime": 1789790095.8444052,
+    "ast_hash": "c95ad58dd86fc8a0c8ab6a5663f65ea7",
+    "semantic_hash": ""
+  },
+  "lib/features/perfil/presentation/perfil_screen.dart": {
+    "mtime": 1789784285.243316,
+    "ast_hash": "e18398fa702ca94c7a78c434b4166b07",
+    "semantic_hash": ""
+  },
+  "lib/features/redes/presentation/redes_screen.dart": {
+    "mtime": 1789790040.012064,
+    "ast_hash": "d3e49f2744e8533eafaa0f4b14949d1f",
+    "semantic_hash": ""
+  },
+  "lib/main.dart": {
+    "mtime": 1789792049.4846754,
+    "ast_hash": "45e01831ca897a15dbed5e693ecb63a1",
+    "semantic_hash": ""
+  },
+  "lib/shared/widgets/admin_drawer.dart": {
+    "mtime": 1789788790.9987326,
+    "ast_hash": "f66b20d4e873f2eb2ae364e9c2ea0f4a",
+    "semantic_hash": ""
+  },
+  "lib/shared/widgets/app_header.dart": {
+    "mtime": 1789788804.259748,
+    "ast_hash": "0833cd77699dba0c4cd89914b339825c",
+    "semantic_hash": ""
+  },
+  "lib/shared/widgets/notifications_sheet.dart": {
+    "mtime": 1789784461.7495549,
+    "ast_hash": "7f6eaf202f78ff41c860af99fd568071",
+    "semantic_hash": ""
+  },
+  "linux/flutter/generated_plugin_registrant.cc": {
+    "mtime": 1789784067.350572,
+    "ast_hash": "2a1786cccd9ae1a0edb4d4dab4ded277",
+    "semantic_hash": ""
+  },
+  "linux/flutter/generated_plugin_registrant.h": {
+    "mtime": 1789784041.8504426,
+    "ast_hash": "d295462c9da9f7fef22dc86c34492318",
+    "semantic_hash": ""
+  },
+  "linux/runner/main.cc": {
+    "mtime": 1789784039.9264362,
+    "ast_hash": "0643b8609698e96b3abd63c210361a87",
+    "semantic_hash": ""
+  },
+  "linux/runner/my_application.cc": {
+    "mtime": 1789784039.926573,
+    "ast_hash": "3cd29400135fb54b22a871002af8fda9",
+    "semantic_hash": ""
+  },
+  "linux/runner/my_application.h": {
+    "mtime": 1789784039.9262118,
+    "ast_hash": "326a85d68857137fdfe8698a0c071baf",
+    "semantic_hash": ""
+  },
+  "macos/Flutter/GeneratedPluginRegistrant.swift": {
+    "mtime": 1789784067.3625722,
+    "ast_hash": "24d0e05ad5108587050ab1aa61540cd0",
+    "semantic_hash": ""
+  },
+  "macos/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift": {
+    "mtime": 1789792910.9469228,
+    "ast_hash": "61d013e6c93b3d917c4f6178b9f6c9cb",
+    "semantic_hash": ""
+  },
+  "macos/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Sources/FlutterGeneratedPluginSwiftPackage/FlutterGeneratedPluginSwiftPackage.swift": {
+    "mtime": 1789784041.8738844,
+    "ast_hash": "e6366d8685ad56268730656aa0a6e00c",
+    "semantic_hash": ""
+  },
+  "macos/Flutter/ephemeral/flutter_export_environment.sh": {
+    "mtime": 1789784041.7829525,
+    "ast_hash": "821a297a04c08ecabbabda64eb53ddb7",
+    "semantic_hash": ""
+  },
+  "macos/Runner/AppDelegate.swift": {
+    "mtime": 1789784039.9071388,
+    "ast_hash": "2a7411ae3e7c6715525b94b6f8d2e80b",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": {
+    "mtime": 1789784039.8959012,
+    "ast_hash": "5bd47c3ef1d1a261037c87fb3ddb9cfd",
+    "semantic_hash": ""
+  },
+  "macos/Runner/MainFlutterWindow.swift": {
+    "mtime": 1789784039.9068656,
+    "ast_hash": "4a747b1f256d62a2bbb79bd976891eb5",
+    "semantic_hash": ""
+  },
+  "macos/RunnerTests/RunnerTests.swift": {
+    "mtime": 1789784039.908573,
+    "ast_hash": "97d3a20fd20a063c192e886d1822b4a8",
+    "semantic_hash": ""
+  },
+  "test/widget_test.dart": {
+    "mtime": 1789784673.003878,
+    "ast_hash": "c2cce0b21a4d2359588293ba4ba4ca75",
+    "semantic_hash": ""
+  },
+  "web/manifest.json": {
+    "mtime": 1789784039.960843,
+    "ast_hash": "b01ce3904270e85acf996c3e9a03db63",
+    "semantic_hash": ""
+  },
+  "windows/flutter/generated_plugin_registrant.cc": {
+    "mtime": 1789784067.3555722,
+    "ast_hash": "89c438bfae5fe6a1f346bb1f9c87a848",
+    "semantic_hash": ""
+  },
+  "windows/flutter/generated_plugin_registrant.h": {
+    "mtime": 1789784041.8536024,
+    "ast_hash": "0ea33875f9f8e118f9c2ded03e2e2835",
+    "semantic_hash": ""
+  },
+  "windows/runner/flutter_window.cpp": {
+    "mtime": 1789784039.9223077,
+    "ast_hash": "9b92b95a9eecce25e3e9d356688d0cb6",
+    "semantic_hash": ""
+  },
+  "windows/runner/flutter_window.h": {
+    "mtime": 1789784039.9203923,
+    "ast_hash": "79bea736711adda00c49419a39a4a0b4",
+    "semantic_hash": ""
+  },
+  "windows/runner/main.cpp": {
+    "mtime": 1789784039.922573,
+    "ast_hash": "25414ae0660b30b54df0ce2dbeebb4d0",
+    "semantic_hash": ""
+  },
+  "windows/runner/resource.h": {
+    "mtime": 1789784039.9236603,
+    "ast_hash": "c8f809a4f8d3f2f625e358fd90f72fee",
+    "semantic_hash": ""
+  },
+  "windows/runner/utils.cpp": {
+    "mtime": 1789784039.9210434,
+    "ast_hash": "e56aa0d1b2e1b995000d67e8e069b83f",
+    "semantic_hash": ""
+  },
+  "windows/runner/utils.h": {
+    "mtime": 1789784039.9241185,
+    "ast_hash": "c741fb9cddbf3a62f4688b6cca39ddcc",
+    "semantic_hash": ""
+  },
+  "windows/runner/win32_window.cpp": {
+    "mtime": 1789784039.9216168,
+    "ast_hash": "928e86a2be27eca688669dce6c9177d9",
+    "semantic_hash": ""
+  },
+  "windows/runner/win32_window.h": {
+    "mtime": 1789784039.9238834,
+    "ast_hash": "5a4cf051798d7e6931ee0405a4523c8f",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1789784039.963898,
+    "ast_hash": "0233b720cc2009d7ddf38184a83626a1",
+    "semantic_hash": ""
+  },
+  "analysis_options.yaml": {
+    "mtime": 1789784039.9632816,
+    "ast_hash": "66d03d7647c8e438164feaf5b922d44a",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md": {
+    "mtime": 1789784039.941042,
+    "ast_hash": "e175e436acacf76c814d83532d0b662c",
+    "semantic_hash": ""
+  },
+  "linux/CMakeLists.txt": {
+    "mtime": 1789784039.929573,
+    "ast_hash": "ad9c64d58486cfcc6927654bda5aa651",
+    "semantic_hash": ""
+  },
+  "linux/flutter/CMakeLists.txt": {
+    "mtime": 1789784039.9256322,
+    "ast_hash": "46690fb8ffaf7d227d8bc4713f31140d",
+    "semantic_hash": ""
+  },
+  "linux/runner/CMakeLists.txt": {
+    "mtime": 1789784039.9277432,
+    "ast_hash": "6d75431dc21756981b53a7494c836311",
+    "semantic_hash": ""
+  },
+  "pubspec.yaml": {
+    "mtime": 1789784104.7327003,
+    "ast_hash": "7c5d354aa4e0dfe68fe81ea6b16c29b9",
+    "semantic_hash": ""
+  },
+  "web/index.html": {
+    "mtime": 1789784039.9614522,
+    "ast_hash": "06b58f05e91ac35bf1ebd451c3962ffb",
+    "semantic_hash": ""
+  },
+  "windows/CMakeLists.txt": {
+    "mtime": 1789784039.924573,
+    "ast_hash": "b89703ff0ba740f3404cd39622281a5d",
+    "semantic_hash": ""
+  },
+  "windows/flutter/CMakeLists.txt": {
+    "mtime": 1789784039.918604,
+    "ast_hash": "0c500410e3259a9a053797dc1c28070e",
+    "semantic_hash": ""
+  },
+  "windows/runner/CMakeLists.txt": {
+    "mtime": 1789784039.9234354,
+    "ast_hash": "e99a99b5cc82a168fc557eb23b8d5a96",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/drawable-nodpi/splash.png": {
+    "mtime": 1789791980.2137458,
+    "ast_hash": "6901c105105411d71a9ea7f5f3e769ef",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/drawable/splash.png": {
+    "mtime": 1789791980.2107458,
+    "ast_hash": "6901c105105411d71a9ea7f5f3e769ef",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-hdpi/ic_launcher.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "8faeab35c6dfc4f9ebb4207f4c5df5b5",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "8faeab35c6dfc4f9ebb4207f4c5df5b5",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-mdpi/ic_launcher.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "e8a2460f90fc837ddea894ac20ae4890",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "e8a2460f90fc837ddea894ac20ae4890",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "38c703030b1585768b122218f6f79f33",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "38c703030b1585768b122218f6f79f33",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "c12b46e95147102c2b6a91c3e74a6d37",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "c12b46e95147102c2b6a91c3e74a6d37",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": {
+    "mtime": 1789791600.9375813,
+    "ast_hash": "b6aa43620e9ad32677d0617b99976da2",
+    "semantic_hash": ""
+  },
+  "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png": {
+    "mtime": 1789791600.9385815,
+    "ast_hash": "b6aa43620e9ad32677d0617b99976da2",
+    "semantic_hash": ""
+  },
+  "assets/images/10.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "facb79c98814e8a411af694c80427fe5",
+    "semantic_hash": ""
+  },
+  "assets/images/11.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "b59796bc3524920158f8ad7cd2a276c6",
+    "semantic_hash": ""
+  },
+  "assets/images/12.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "8b54389d1ede7680196cfafc49229ef1",
+    "semantic_hash": ""
+  },
+  "assets/images/13.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "ce0ece99567a5f5c9f6f6fde87e1f89f",
+    "semantic_hash": ""
+  },
+  "assets/images/4.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "2de49370a66e923454baa8463490c43e",
+    "semantic_hash": ""
+  },
+  "assets/images/5.png": {
+    "mtime": 1789784097.614658,
+    "ast_hash": "ccecfe7941e943acf735adbf27660b79",
+    "semantic_hash": ""
+  },
+  "assets/images/6.png": {
+    "mtime": 1789784097.6156583,
+    "ast_hash": "2a09e68fb57b96bd6e03fe66752667a5",
+    "semantic_hash": ""
+  },
+  "assets/images/7.png": {
+    "mtime": 1789784097.6156583,
+    "ast_hash": "462a3c4fd69a49937d1f4aa6db5f0144",
+    "semantic_hash": ""
+  },
+  "assets/images/8.png": {
+    "mtime": 1789784097.6156583,
+    "ast_hash": "3648d073a7b8c92c2a3cbd552b84aaf2",
+    "semantic_hash": ""
+  },
+  "assets/images/9.png": {
+    "mtime": 1789784097.6156583,
+    "ast_hash": "1c88e126f28256f20a41c26c305846c8",
+    "semantic_hash": ""
+  },
+  "assets/images/file.svg": {
+    "mtime": 1789784097.6096582,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": ""
+  },
+  "assets/images/globe.svg": {
+    "mtime": 1789784097.6096582,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": ""
+  },
+  "assets/images/iconlogo.svg": {
+    "mtime": 1789784097.6106582,
+    "ast_hash": "0e150e97cb621e8fa763a7b2c5509bf8",
+    "semantic_hash": ""
+  },
+  "assets/images/logo.svg": {
+    "mtime": 1789784097.6106582,
+    "ast_hash": "a2bd9b387dd3ff4893c67fb12cd69735",
+    "semantic_hash": ""
+  },
+  "assets/images/next.svg": {
+    "mtime": 1789784097.6106582,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": ""
+  },
+  "assets/images/splash.png": {
+    "mtime": 1789791980.2167459,
+    "ast_hash": "6901c105105411d71a9ea7f5f3e769ef",
+    "semantic_hash": ""
+  },
+  "assets/images/vercel.svg": {
+    "mtime": 1789784097.6106582,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": ""
+  },
+  "assets/images/window.svg": {
+    "mtime": 1789784097.6106582,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png": {
+    "mtime": 1789784039.944248,
+    "ast_hash": "c785f8932297af4acd5f5ccb7630f01c",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png": {
+    "mtime": 1789784039.9437509,
+    "ast_hash": "a2f8558fb1d42514111fbbb19fb67314",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png": {
+    "mtime": 1789784039.9463882,
+    "ast_hash": "2247a840b6ee72b8a069208af170e5b1",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png": {
+    "mtime": 1789784039.947041,
+    "ast_hash": "1b3b1538136316263c7092951e923e9d",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png": {
+    "mtime": 1789784039.944872,
+    "ast_hash": "be8887071dd7ec39cb754d236aa9584f",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png": {
+    "mtime": 1789784039.9461231,
+    "ast_hash": "043119ef4faa026ff82bd03f241e5338",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png": {
+    "mtime": 1789784039.9455926,
+    "ast_hash": "2b1452c4c1bda6177b4fbbb832df217f",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png": {
+    "mtime": 1789784039.9467025,
+    "ast_hash": "2247a840b6ee72b8a069208af170e5b1",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png": {
+    "mtime": 1789784039.9453602,
+    "ast_hash": "8245359312aea1b0d2412f79a07b0ca5",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png": {
+    "mtime": 1789784039.942902,
+    "ast_hash": "5b3c0902200ce596e9848f22e1f0fe0e",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png": {
+    "mtime": 1789784039.94266,
+    "ast_hash": "5b3c0902200ce596e9848f22e1f0fe0e",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png": {
+    "mtime": 1789784039.944009,
+    "ast_hash": "e419d22a37bc40ba185aca1acb6d4ac6",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png": {
+    "mtime": 1789784039.9434922,
+    "ast_hash": "36c0d7a7132bdde18898ffdfcfcdc4d2",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png": {
+    "mtime": 1789784039.9458284,
+    "ast_hash": "643842917530acf4c5159ae851b0baf2",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png": {
+    "mtime": 1789784039.9451256,
+    "ast_hash": "665cb5e3c5729da6d639d26eff47a503",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-1024.png": {
+    "mtime": 1789791648.137697,
+    "ast_hash": "2c2a9578bc1a467d8cc1332b8d84161b",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-20-ipad.png": {
+    "mtime": 1789791648.140697,
+    "ast_hash": "db6e1e93fec450415040069e3d018fbe",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-20@2x-ipad.png": {
+    "mtime": 1789791648.140697,
+    "ast_hash": "bc1cd144242c8b95a8bc6d7b600ef120",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-20@2x.png": {
+    "mtime": 1789791648.140697,
+    "ast_hash": "bc1cd144242c8b95a8bc6d7b600ef120",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-20@3x.png": {
+    "mtime": 1789791648.140697,
+    "ast_hash": "dbc4e9780077562be13d8aa8d1d87a82",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-29-ipad.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "0c31065df3293e793f9efab31d3a836c",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-29@2x-ipad.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "ccb4717650ec82c85b356d2f90d98c6e",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-29@2x.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "ccb4717650ec82c85b356d2f90d98c6e",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-29@3x.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "75f6609570836d5895c0111964a472dc",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-40-ipad.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "bc1cd144242c8b95a8bc6d7b600ef120",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-40@2x-ipad.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "d70fc882c1cd0173b812f9a235803b57",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-40@2x.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "d70fc882c1cd0173b812f9a235803b57",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-40@3x.png": {
+    "mtime": 1789791648.1416972,
+    "ast_hash": "f1a74606feb7245ec28cd36f03860853",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-60@2x.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "f1a74606feb7245ec28cd36f03860853",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-60@3x.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "7f3fade37135ba131234041322acdd81",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-76.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "e6429b68f3c85003973c4d41c10c77b1",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-76@2x.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "9d23c7f758c24b932cf4dbb0d0bb785f",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/AppIcon.appiconset/icon-83.5@2x.png": {
+    "mtime": 1789791648.143697,
+    "ast_hash": "729b74c0f8d1bbaa5a9882cdd892d85b",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage.png": {
+    "mtime": 1789784039.9417634,
+    "ast_hash": "978c1bee49d7ad5fc1a4d81099b13e18",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@2x.png": {
+    "mtime": 1789784039.9420352,
+    "ast_hash": "978c1bee49d7ad5fc1a4d81099b13e18",
+    "semantic_hash": ""
+  },
+  "ios/Runner/Assets.xcassets/LaunchImage.imageset/LaunchImage@3x.png": {
+    "mtime": 1789784039.9415298,
+    "ast_hash": "978c1bee49d7ad5fc1a4d81099b13e18",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png": {
+    "mtime": 1789784039.9021795,
+    "ast_hash": "c9becc9105f8cabce934d20c7bfb6aac",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_128.png": {
+    "mtime": 1789784039.8962474,
+    "ast_hash": "3ded30823804caaa5ccc944067c54a36",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png": {
+    "mtime": 1789784039.8967783,
+    "ast_hash": "8bf511604bc6ed0a6aeb380c5113fdcf",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png": {
+    "mtime": 1789784039.900573,
+    "ast_hash": "dfe2c93d1536ae02f085cc63faa3430e",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_32.png": {
+    "mtime": 1789784039.8970761,
+    "ast_hash": "8e0ae58e362a6636bdfccbc04da2c58c",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_512.png": {
+    "mtime": 1789784039.8952568,
+    "ast_hash": "0ad44039155424738917502c69667699",
+    "semantic_hash": ""
+  },
+  "macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_64.png": {
+    "mtime": 1789784039.893573,
+    "ast_hash": "04e7b6ef05346c70b663ca1d97de3ad5",
+    "semantic_hash": ""
+  },
+  "web/apple-touch-icon.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "7f3fade37135ba131234041322acdd81",
+    "semantic_hash": ""
+  },
+  "web/favicon-16x16.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "765f15abec2ca1591f7a31b4efa5ba76",
+    "semantic_hash": ""
+  },
+  "web/favicon-32x32.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "08e9a7c76b8490202e9f65994f8e00f9",
+    "semantic_hash": ""
+  },
+  "web/favicon-48x48.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "e8a2460f90fc837ddea894ac20ae4890",
+    "semantic_hash": ""
+  },
+  "web/favicon.png": {
+    "mtime": 1789784039.9603202,
+    "ast_hash": "5dcef449791fa27946b3d35ad8803796",
+    "semantic_hash": ""
+  },
+  "web/icon-192x192.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "b6aa43620e9ad32677d0617b99976da2",
+    "semantic_hash": ""
+  },
+  "web/icon-512x512.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "5aefd986bb6e981a168e4f8469632402",
+    "semantic_hash": ""
+  },
+  "web/icons/Icon-192.png": {
+    "mtime": 1789784039.95985,
+    "ast_hash": "ac9a721a12bbc803b44f645561ecb1e1",
+    "semantic_hash": ""
+  },
+  "web/icons/Icon-512.png": {
+    "mtime": 1789784039.9578419,
+    "ast_hash": "96e752610906ba2a93c65f8abe1645f1",
+    "semantic_hash": ""
+  },
+  "web/icons/Icon-maskable-192.png": {
+    "mtime": 1789784039.9587376,
+    "ast_hash": "c457ef57daa1d16f64b27b786ec2ea3c",
+    "semantic_hash": ""
+  },
+  "web/icons/Icon-maskable-512.png": {
+    "mtime": 1789784039.959287,
+    "ast_hash": "301a7604d45b3e739efc881eb04896ea",
+    "semantic_hash": ""
+  },
+  "web/mstile-150x150.png": {
+    "mtime": 1789791648.150697,
+    "ast_hash": "524a8e7bb707731160371b84113a1c61",
+    "semantic_hash": ""
+  },
+  "web/safari-pinned-tab.png": {
+    "mtime": 1789791648.1516972,
+    "ast_hash": "5aefd986bb6e981a168e4f8469632402",
+    "semantic_hash": ""
+  }
+}
