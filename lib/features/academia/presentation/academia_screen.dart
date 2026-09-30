@@ -3767,11 +3767,14 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
     final enrollableCourses = _getEnrollableCourses();
     final pendingEnrollment = _getPendingEnrollment();
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1200),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           // Banner de Matrícula Abierta
           Container(
             padding: const EdgeInsets.all(18),
@@ -4096,22 +4099,55 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
               ),
             )
           else
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: enrollableCourses.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
-              itemBuilder: (context, index) {
-                final course = enrollableCourses[index];
-                return _buildCourseEnrollmentCard(course);
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isWide = constraints.maxWidth >= 640;
+                final crossAxisCount = constraints.maxWidth >= 1050 ? 3 : (isWide ? 2 : 1);
+
+                if (crossAxisCount == 1) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: enrollableCourses.length,
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final course = enrollableCourses[index];
+                      return _buildCourseEnrollmentCard(course);
+                    },
+                  );
+                }
+
+                final rowCount = (enrollableCourses.length / crossAxisCount).ceil();
+                return Column(
+                  children: [
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) ...[
+                      if (rowIndex > 0) const SizedBox(height: 14),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (int col = 0; col < crossAxisCount; col++) ...[
+                            if (col > 0) const SizedBox(width: 14),
+                            Expanded(
+                              child: (rowIndex * crossAxisCount + col < enrollableCourses.length)
+                                  ? _buildCourseEnrollmentCard(enrollableCourses[rowIndex * crossAxisCount + col])
+                                  : const SizedBox.shrink(),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ],
+                );
               },
             ),
 
           const SizedBox(height: 32),
         ],
       ),
-    );
-  }
+    ),
+  ),
+);
+}
 
   Widget _buildCourseEnrollmentCard(Map<String, dynamic> course, {VoidCallback? onEnrolled}) {
     final teacher = course['profiles'];
@@ -4145,11 +4181,16 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+              Wrap(
+                spacing: 6,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -4168,7 +4209,6 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
                       ),
                     ),
                   ),
-                  const SizedBox(width: 6),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                     decoration: BoxDecoration(
@@ -4250,7 +4290,9 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
+              height: 1.3,
             ),
+            softWrap: true,
           ),
           if (isPreviouslyApproved) ...[
             const SizedBox(height: 6),
@@ -4262,13 +4304,15 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
                 border: Border.all(color: const Color(0xFFBBF7D0)),
               ),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.check_circle_outline, size: 13, color: Color(0xFF16A34A)),
-                  const SizedBox(width: 5),
-                  Text(
-                    'Ya lo aprobaste anteriormente • Puedes volver a llevarlo',
-                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF15803D)),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      'Ya lo aprobaste anteriormente • Puedes volver a llevarlo',
+                      style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF15803D)),
+                      softWrap: true,
+                    ),
                   ),
                 ],
               ),
@@ -10443,15 +10487,18 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
 
   Widget _buildDetailRow(IconData icon, String text) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 14, color: AppColors.secondary),
-        const SizedBox(width: 6),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Icon(icon, size: 14, color: AppColors.secondary),
+        ),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
-            style: GoogleFonts.inter(fontSize: 11.5, color: AppColors.onSurfaceVariant),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            style: GoogleFonts.inter(fontSize: 11.5, color: AppColors.onSurfaceVariant, height: 1.35),
+            softWrap: true,
           ),
         ),
       ],

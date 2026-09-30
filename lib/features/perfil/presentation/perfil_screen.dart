@@ -465,7 +465,7 @@ class _PerfilScreenState extends ConsumerState<PerfilScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Accede a tu carnet digital, historial de notas de la academia y registro de diezmos.',
+                'Accede a tu perfil digital, historial de notas de la academia y registro de diezmos.',
                 style: GoogleFonts.inter(fontSize: 13, color: AppColors.secondary),
                 textAlign: TextAlign.center,
               ),
@@ -1368,18 +1368,9 @@ class _PerfilScreenState extends ConsumerState<PerfilScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'CARNET DE MEMBRESÍA',
-                    style: GoogleFonts.inter(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.tertiaryAccent,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  Text(
                     'Alianza Chaclacayo',
                     style: GoogleFonts.plusJakartaSans(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -1393,9 +1384,9 @@ class _PerfilScreenState extends ConsumerState<PerfilScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
-                  Icons.card_membership,
+                  Icons.church,
                   color: Colors.white,
-                  size: 28,
+                  size: 26,
                 ),
               ),
             ],

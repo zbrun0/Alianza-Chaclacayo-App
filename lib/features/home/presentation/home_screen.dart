@@ -1210,8 +1210,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   icon: Icons.badge_outlined,
                   iconColor: const Color(0xFF0369A1),
                   iconBgColor: const Color(0xFFE0F2FE),
-                  title: 'Carnet Digital',
-                  subtitle: 'Mi Perfil de Miembro',
+                  title: 'Mi Perfil',
+                  subtitle: 'Datos de Miembro',
                   onTap: () => widget.onTabChange?.call('perfil'),
                 ),
               ];

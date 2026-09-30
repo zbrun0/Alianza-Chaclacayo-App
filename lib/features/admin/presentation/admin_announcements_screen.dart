@@ -151,10 +151,10 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
   Widget _buildImageWidget(String? imageUrl, {String? imageSize}) {
     if (imageUrl == null || imageUrl.isEmpty) {
       return Container(
-        height: 130,
-        color: AppColors.primary.withValues(alpha: 0.1),
+        height: 110,
+        color: AppColors.primary.withValues(alpha: 0.08),
         child: const Center(
-          child: Icon(Icons.campaign, color: AppColors.primary, size: 32),
+          child: Icon(Icons.campaign, color: AppColors.primary, size: 28),
         ),
       );
     }
@@ -166,7 +166,7 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
       color: const Color(0xFF0A192F),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 480),
+          constraints: const BoxConstraints(maxHeight: 220),
           child: AspectRatio(
             aspectRatio: ratio,
             child: _buildRawImage(imageUrl, fit: BoxFit.cover),
@@ -193,32 +193,11 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
     Uint8List? pickedImageBytes;
     bool isUploading = false;
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (context, setModalState) {
-            return Container(
-              padding: EdgeInsets.only(
-                top: 24,
-                left: 20,
-                right: 20,
-                bottom: MediaQuery.of(context).viewInsets.bottom + 24,
-              ),
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.9,
-              ),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+    Widget buildForm(BuildContext ctx, StateSetter setModalState) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -727,7 +706,7 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
                                   Navigator.pop(ctx);
                                 }
                                 _fetchAnnouncements();
-                                if (context.mounted) {
+                                if (mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
@@ -739,7 +718,7 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
                                 }
                               } catch (e) {
                                 setModalState(() => isUploading = false);
-                                if (context.mounted) {
+                                if (mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Error al guardar anuncio: $e'),
@@ -767,13 +746,63 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
                             ),
                     ),
                   ],
-                ),
+      );
+    }
+
+    final isDesktop = MediaQuery.sizeOf(context).width >= 700;
+    if (isDesktop) {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            backgroundColor: Colors.white,
+            clipBehavior: Clip.antiAlias,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 600, maxHeight: 780),
+              child: StatefulBuilder(
+                builder: (context, setModalState) {
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.all(24),
+                    child: buildForm(ctx, setModalState),
+                  );
+                },
               ),
-            );
-          },
-        );
-      },
-    );
+            ),
+          );
+        },
+      );
+    } else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (ctx) {
+          return StatefulBuilder(
+            builder: (context, setModalState) {
+              return Container(
+                padding: EdgeInsets.only(
+                  top: 24,
+                  left: 20,
+                  right: 20,
+                  bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+                ),
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.9,
+                ),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+                ),
+                child: SingleChildScrollView(
+                  child: buildForm(ctx, setModalState),
+                ),
+              );
+            },
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -811,193 +840,259 @@ class _AdminAnnouncementsScreenState extends ConsumerState<AdminAnnouncementsScr
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _fetchAnnouncements,
-        color: AppColors.primary,
-        child: Column(
-          children: [
-            // Search Bar
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: AppColors.surfaceContainerLowest,
-              child: TextField(
-                onChanged: (val) => setState(() => _searchQuery = val),
-                decoration: InputDecoration(
-                  hintText: 'Buscar por título o categoría...',
-                  prefixIcon: const Icon(Icons.search, size: 20),
-                  isDense: true,
-                  filled: true,
-                  fillColor: const Color(0xFFF8FAFC),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-                  ),
-                ),
-              ),
-            ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = constraints.maxWidth >= 700;
+          final crossAxisCount = constraints.maxWidth >= 1150 ? 3 : (isWide ? 2 : 1);
 
-            const Divider(height: 1),
-
-            // List of announcements
-            Expanded(
-              child: _loading
-                  ? const Center(child: CircularProgressIndicator())
-                  : filtered.isEmpty
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(28),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.campaign_outlined, size: 48, color: AppColors.secondary),
-                                const SizedBox(height: 12),
-                                Text(
-                                  _searchQuery.isEmpty ? 'No hay anuncios registrados' : 'No se encontraron resultados',
-                                  style: GoogleFonts.plusJakartaSans(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primary,
-                                  ),
+          return RefreshIndicator(
+            onRefresh: _fetchAnnouncements,
+            color: AppColors.primary,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1200),
+                child: Column(
+                  children: [
+                    // Search Bar & Desktop Header Toolbar
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      color: AppColors.surfaceContainerLowest,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              onChanged: (val) => setState(() => _searchQuery = val),
+                              decoration: InputDecoration(
+                                hintText: 'Buscar por título o categoría...',
+                                prefixIcon: const Icon(Icons.search, size: 20),
+                                isDense: true,
+                                filled: true,
+                                fillColor: const Color(0xFFF8FAFC),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                                 ),
-                                const SizedBox(height: 8),
-                                ElevatedButton.icon(
-                                  onPressed: () => _showFormDialog(),
-                                  icon: const Icon(Icons.add, size: 16),
-                                  label: const Text('Crear Primer Anuncio'),
-                                  style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        )
-                      : ListView.separated(
-                          padding: const EdgeInsets.all(16),
-                          itemCount: filtered.length,
-                          separatorBuilder: (_, _) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final ann = filtered[index];
-                            final id = ann['id'].toString();
-                            final title = ann['title']?.toString() ?? 'Sin título';
-                            final category = ann['category']?.toString() ?? 'General';
-                            final dateLabel = ann['date_label']?.toString() ?? 'Próximamente';
-                            final imageUrl = ann['image_url']?.toString();
-                            final imageSize = ann['image_size']?.toString();
-                            final keepForever = ann['keep_forever'] == true;
-
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.surfaceContainerLowest,
-                                borderRadius: BorderRadius.circular(18),
-                                border: Border.all(color: const Color(0xFFE2E8F0)),
+                          if (isWide) ...[
+                            const SizedBox(width: 14),
+                            ElevatedButton.icon(
+                              onPressed: () => _showFormDialog(),
+                              icon: const Icon(Icons.add, size: 18),
+                              label: const Text('Nuevo Anuncio'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               ),
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildImageWidget(imageUrl, imageSize: imageSize),
-                                  Padding(
-                                    padding: const EdgeInsets.all(14),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+
+                    const Divider(height: 1),
+
+                    // List / Grid of announcements
+                    Expanded(
+                      child: _loading
+                          ? const Center(child: CircularProgressIndicator())
+                          : filtered.isEmpty
+                              ? Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(28),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(
-                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                              decoration: BoxDecoration(
-                                                color: AppColors.primary.withValues(alpha: 0.1),
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                category.toUpperCase(),
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: AppColors.primary,
-                                                ),
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  keepForever ? Icons.all_inclusive : Icons.timer_outlined,
-                                                  size: 13,
-                                                  color: AppColors.secondary,
-                                                ),
-                                                const SizedBox(width: 4),
-                                                Text(
-                                                  keepForever ? 'Permanente' : dateLabel,
-                                                  style: const TextStyle(
-                                                    fontSize: 11,
-                                                    color: AppColors.secondary,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8),
+                                        const Icon(Icons.campaign_outlined, size: 48, color: AppColors.secondary),
+                                        const SizedBox(height: 12),
                                         Text(
-                                          title,
+                                          _searchQuery.isEmpty ? 'No hay anuncios registrados' : 'No se encontraron resultados',
                                           style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 14.5,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.primary,
                                           ),
                                         ),
-                                        if (ann['description'] != null &&
-                                            ann['description'].toString().isNotEmpty) ...[
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            ann['description'].toString(),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12,
-                                              color: AppColors.onSurfaceVariant,
-                                            ),
-                                          ),
-                                        ],
-                                        const SizedBox(height: 12),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            TextButton.icon(
-                                              onPressed: () => _showFormDialog(ann),
-                                              icon: const Icon(Icons.edit_outlined, size: 16),
-                                              label: const Text('Editar', style: TextStyle(fontSize: 12)),
-                                            ),
-                                            const SizedBox(width: 8),
-                                            TextButton.icon(
-                                              onPressed: () => _deleteAnnouncement(id, title),
-                                              icon: const Icon(Icons.delete_outline, size: 16, color: AppColors.error),
-                                              label: const Text(
-                                                'Eliminar',
-                                                style: TextStyle(fontSize: 12, color: AppColors.error),
-                                              ),
-                                            ),
-                                          ],
+                                        const SizedBox(height: 8),
+                                        ElevatedButton.icon(
+                                          onPressed: () => _showFormDialog(),
+                                          icon: const Icon(Icons.add, size: 16),
+                                          label: const Text('Crear Primer Anuncio'),
+                                          style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
                                         ),
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                                )
+                              : crossAxisCount == 1
+                                  ? ListView.separated(
+                                      padding: const EdgeInsets.all(16),
+                                      itemCount: filtered.length,
+                                      separatorBuilder: (_, _) => const SizedBox(height: 14),
+                                      itemBuilder: (context, index) => _buildAnnouncementCard(filtered[index]),
+                                    )
+                                  : ListView.separated(
+                                      padding: const EdgeInsets.all(18),
+                                      itemCount: (filtered.length / crossAxisCount).ceil(),
+                                      separatorBuilder: (_, _) => const SizedBox(height: 16),
+                                      itemBuilder: (context, rowIndex) {
+                                        return Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            for (int col = 0; col < crossAxisCount; col++) ...[
+                                              if (col > 0) const SizedBox(width: 16),
+                                              Expanded(
+                                                child: (rowIndex * crossAxisCount + col < filtered.length)
+                                                    ? _buildAnnouncementCard(filtered[rowIndex * crossAxisCount + col])
+                                                    : const SizedBox.shrink(),
+                                              ),
+                                            ],
+                                          ],
+                                        );
+                                      },
+                                    ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ],
-        ),
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showFormDialog(),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        icon: const Icon(Icons.add),
-        label: const Text('Nuevo Anuncio'),
+      floatingActionButton: LayoutBuilder(
+        builder: (context, constraints) {
+          final isWide = MediaQuery.sizeOf(context).width >= 700;
+          if (isWide) return const SizedBox.shrink();
+          return FloatingActionButton.extended(
+            onPressed: () => _showFormDialog(),
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            icon: const Icon(Icons.add),
+            label: const Text('Nuevo Anuncio'),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAnnouncementCard(Map<String, dynamic> ann) {
+    final id = ann['id'].toString();
+    final title = ann['title']?.toString() ?? 'Sin título';
+    final category = ann['category']?.toString() ?? 'General';
+    final dateLabel = ann['date_label']?.toString() ?? 'Próximamente';
+    final imageUrl = ann['image_url']?.toString();
+    final imageSize = ann['image_size']?.toString();
+    final keepForever = ann['keep_forever'] == true;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildImageWidget(imageUrl, imageSize: imageSize),
+          Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        category.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          keepForever ? Icons.all_inclusive : Icons.timer_outlined,
+                          size: 13,
+                          color: AppColors.secondary,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          keepForever ? 'Permanente' : dateLabel,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: AppColors.secondary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 14.5,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+                if (ann['description'] != null &&
+                    ann['description'].toString().isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    ann['description'].toString(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () => _showFormDialog(ann),
+                      icon: const Icon(Icons.edit_outlined, size: 16),
+                      label: const Text('Editar', style: TextStyle(fontSize: 12)),
+                    ),
+                    const SizedBox(width: 8),
+                    TextButton.icon(
+                      onPressed: () => _deleteAnnouncement(id, title),
+                      icon: const Icon(Icons.delete_outline, size: 16, color: AppColors.error),
+                      label: const Text(
+                        'Eliminar',
+                        style: TextStyle(fontSize: 12, color: AppColors.error),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
