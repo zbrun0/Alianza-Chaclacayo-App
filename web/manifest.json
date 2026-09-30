@@ -1,12 +1,12 @@
 {
-    "name": "alianza_chaclacayo_app",
-    "short_name": "alianza_chaclacayo_app",
+    "name": "Alianza Chaclacayo",
+    "short_name": "Alianza Ch.",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#00173B",
+    "theme_color": "#00173B",
+    "description": "Aplicación Oficial de la Iglesia Alianza Cristiana y Misionera de Chaclacayo",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

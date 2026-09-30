@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme/app_colors.dart';
 import '../../features/auth/data/auth_provider.dart';
+
+import '../../shared/providers/notifications_provider.dart';
 
 class AppHeader extends ConsumerWidget implements PreferredSizeWidget {
   final VoidCallback? onNotificationTap;
@@ -19,6 +20,7 @@ class AppHeader extends ConsumerWidget implements PreferredSizeWidget {
     final user = authState.userProfile;
     final firstName = user != null ? user.firstName : 'Hermano/a';
     final hasAdminAccess = user?.hasAdminAccess ?? false;
+    final unreadCount = ref.watch(notificationCountProvider);
 
     return AppBar(
       backgroundColor: AppColors.primary,
@@ -33,47 +35,27 @@ class AppHeader extends ConsumerWidget implements PreferredSizeWidget {
               ),
             )
           : null,
-      titleSpacing: hasAdminAccess ? 0 : 12,
-      title: Row(
+      titleSpacing: hasAdminAccess ? 0 : 16,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            height: 38,
-            width: 38,
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: SvgPicture.asset(
-              'assets/images/logo.svg',
-              colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.church, color: Colors.white, size: 22),
+          Text(
+            'IACYM Chaclacayo',
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              letterSpacing: -0.2,
             ),
           ),
-          const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Alianza Chaclacayo',
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: -0.2,
-                ),
-              ),
-              Text(
-                '¡Hola, $firstName!',
-                style: GoogleFonts.inter(
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.onPrimaryContainer,
-                ),
-              ),
-            ],
+          Text(
+            '¡Hola, $firstName!',
+            style: GoogleFonts.inter(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w400,
+              color: AppColors.onPrimaryContainer,
+            ),
           ),
         ],
       ),
@@ -81,17 +63,18 @@ class AppHeader extends ConsumerWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 8),
           child: IconButton(
-            icon: const Badge(
-              backgroundColor: Color(0xFFC5875A),
+            icon: Badge(
+              isLabelVisible: unreadCount > 0,
+              backgroundColor: const Color(0xFFC5875A),
               label: Text(
-                '2',
-                style: TextStyle(
+                unreadCount > 99 ? '99+' : '$unreadCount',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.notifications_outlined,
                 color: Colors.white,
                 size: 24,

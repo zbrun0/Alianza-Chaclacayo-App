@@ -43,3 +43,18 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android signing keys
+*.jks
+*.keystore
+**/android/key.properties
+
+# Graphify
+graphify-out/cache/ast/
+graphify-out/2026-*/
+
+# Agents & AI tools
+.agents/
+.claude/
+skills-lock.json
+.firebase/

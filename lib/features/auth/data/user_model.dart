@@ -50,41 +50,53 @@ class UserProfile {
   }
 
   List<String> get rolesList =>
-      role.split(',').map((r) => r.trim().toLowerCase()).toList();
+      role.split(',').map((r) => r.trim().toLowerCase()).where((r) => r.isNotEmpty).toList();
 
-  bool get isPastor => rolesList.contains('pastor');
-  bool get isTreasuryAdmin => isPastor || rolesList.contains('admin_tesoreria');
-  bool get isTeacher => isPastor || rolesList.contains('maestro') || rolesList.contains('instructor_temporal');
+  bool get isAdmin => rolesList.contains('admin');
+  bool get isPastor => isAdmin || rolesList.contains('pastor');
+  bool get isTreasuryAdmin => isAdmin || isPastor || rolesList.contains('admin_tesoreria');
+  bool get isTeacher =>
+      isAdmin || isPastor || rolesList.contains('maestro') || rolesList.contains('instructor_temporal') || rolesList.contains('instructor_abc');
   bool get isGroupLeader =>
-      isPastor || rolesList.contains('lider_grupo') || rolesList.contains('coordinador_red') || rolesList.contains('lider_red');
-  bool get isCultoAdmin => isPastor || rolesList.contains('conteo_culto');
-  bool get isAcademyCoordinator => isPastor || rolesList.contains('coordinador_academia');
-  bool get isAnnouncementAdmin => isPastor || rolesList.contains('encargado_anuncios');
-  bool get isPrayerAdmin => isPastor || rolesList.contains('encargado_oracion');
+      isAdmin || isPastor || rolesList.contains('lider_grupo') || rolesList.contains('coordinador_red') || rolesList.contains('lider_red');
+  bool get isNetworkCoordinator => isAdmin || isPastor || rolesList.contains('coordinador_red');
+  bool get hasRedesAccess => isAdmin;
+  bool get isCultoAdmin => isAdmin || isPastor || rolesList.contains('conteo_culto');
+  bool get isAcademyCoordinator => isAdmin || isPastor || rolesList.contains('coordinador_academia');
+  bool get isAnnouncementAdmin => isAdmin || isPastor || rolesList.contains('encargado_anuncios');
+  bool get isPrayerAdmin => isAdmin || isPastor || rolesList.contains('encargado_oracion');
 
   bool get hasAdminAccess =>
-      isPastor || isTreasuryAdmin || isCultoAdmin || isAcademyCoordinator || isAnnouncementAdmin || isPrayerAdmin;
+      isAdmin ||
+      isPastor ||
+      isTreasuryAdmin ||
+      isCultoAdmin ||
+      isAcademyCoordinator ||
+      isAnnouncementAdmin ||
+      isPrayerAdmin ||
+      isGroupLeader;
 
   String get roleTranslated {
     const translations = {
-      'miembro': 'Miembro',
-      'lider_grupo': 'Líder de Grupo',
+      'admin': 'Administrador (Soporte)',
+      'pastor': 'Pastor Principal',
       'coordinador_red': 'Coordinador de Red',
       'lider_red': 'Líder de Red',
-      'coordinador_academia': 'Coordinador de Academia',
+      'lider_grupo': 'Líder de Célula',
       'maestro': 'Maestro',
-      'instructor_temporal': 'Instructor Temporal',
+      'instructor_temporal': 'Maestro',
+      'instructor_abc': 'Maestro',
+      'coordinador_academia': 'Coordinador de Academia',
       'admin_tesoreria': 'Encargado de Tesorería',
       'encargado_anuncios': 'Encargado de Anuncios',
       'encargado_oracion': 'Encargado de Oración',
       'apoyo_abc': 'Apoyo de Academia',
-      'conteo_culto': 'Encargado de Conteo de Culto',
-      'pastor': 'Pastor Principal',
+      'conteo_culto': 'Encargado Conteo Culto',
+      'miembro': 'Miembro',
     };
 
     if (role.isEmpty) return 'Miembro';
-    return rolesList
-        .map((r) => translations[r] ?? r)
-        .join(', ');
+    final labels = rolesList.map((r) => translations[r] ?? r).toSet().toList();
+    return labels.isEmpty ? 'Miembro' : labels.join(', ');
   }
 }

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/theme/app_colors.dart';
 import '../../features/auth/data/auth_provider.dart';
 
+import '../../features/admin/presentation/admin_dashboard_screen.dart';
+import '../../features/admin/presentation/admin_members_screen.dart';
+import '../../features/admin/presentation/admin_treasury_screen.dart';
+import '../../features/admin/presentation/admin_attendance_screen.dart';
+import '../../features/admin/presentation/admin_culto_screen.dart';
+import '../../features/admin/presentation/admin_announcements_screen.dart';
+
 class AdminDrawer extends ConsumerWidget {
-  const AdminDrawer({super.key});
+  final Function(dynamic)? onSelectTab;
+
+  const AdminDrawer({super.key, this.onSelectTab});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,19 +41,12 @@ class AdminDrawer extends ConsumerWidget {
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  Container(
-                    height: 44,
-                    width: 44,
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/images/logo.svg',
-                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.church, color: Colors.white),
+                  SizedBox(
+                    height: 46,
+                    width: 46,
+                    child: Image.asset(
+                      'assets/images/alianza_logo_transparente.png',
+                      fit: BoxFit.contain,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -91,8 +92,9 @@ class AdminDrawer extends ConsumerWidget {
                       label: 'Dashboard General',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Dashboard General...')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
                         );
                       },
                     ),
@@ -102,8 +104,9 @@ class AdminDrawer extends ConsumerWidget {
                       label: 'Directorio de Miembros',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Directorio de Miembros...')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminMembersScreen()),
                         );
                       },
                     ),
@@ -113,22 +116,36 @@ class AdminDrawer extends ConsumerWidget {
                     _buildDrawerItem(
                       context: context,
                       icon: Icons.school_outlined,
-                      label: 'Gestión de Academia ABC',
+                      label: 'Academia ABC (Coordinación)',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Gestión de Academia...')),
-                        );
+                        onSelectTab?.call(1);
                       },
                     ),
+                  ],
+
+                  if (user.hasRedesAccess) ...[
+                    _buildDrawerItem(
+                      context: context,
+                      icon: Icons.groups_outlined,
+                      label: 'Redes Ministeriales',
+                      onTap: () {
+                        Navigator.pop(context);
+                        onSelectTab?.call('redes');
+                      },
+                    ),
+                  ],
+
+                  if (user.isPastor || user.isGroupLeader) ...[
                     _buildDrawerItem(
                       context: context,
                       icon: Icons.how_to_reg_outlined,
-                      label: 'Reporte de Asistencias ABC',
+                      label: 'Control de Asistencias',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Reporte de Asistencias...')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminAttendanceScreen()),
                         );
                       },
                     ),
@@ -141,8 +158,9 @@ class AdminDrawer extends ConsumerWidget {
                       label: 'Tesorería Reservada',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Bandeja de Tesorería...')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminTreasuryScreen()),
                         );
                       },
                     ),
@@ -155,8 +173,24 @@ class AdminDrawer extends ConsumerWidget {
                       label: 'Conteo de Culto Dominical',
                       onTap: () {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Accediendo a Conteo de Culto...')),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminCultoScreen()),
+                        );
+                      },
+                    ),
+                  ],
+
+                  if (user.isPastor || user.hasAdminAccess) ...[
+                    _buildDrawerItem(
+                      context: context,
+                      icon: Icons.campaign_outlined,
+                      label: 'Gestión de Anuncios y Avisos',
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const AdminAnnouncementsScreen()),
                         );
                       },
                     ),

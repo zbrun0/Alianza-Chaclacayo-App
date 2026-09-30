@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/services/resend_email_service.dart';
 import '../../auth/data/auth_provider.dart';
 
 class DiezmosScreen extends ConsumerStatefulWidget {
@@ -177,6 +178,20 @@ class _DiezmosScreenState extends ConsumerState<DiezmosScreen>
         'notes': notesFormatted,
       });
 
+      if (user != null && user.email.isNotEmpty) {
+        final fundLabels = _selectedFunds
+            .map((f) => _contributionTypes.firstWhere((t) => t['id'] == f, orElse: () => {'label': f})['label'] ?? f)
+            .join(', ');
+
+        ResendEmailService.sendTithingConfirmation(
+          to: user.email,
+          memberName: user.name,
+          amount: amount.toStringAsFixed(2),
+          type: fundLabels,
+          bank: 'Transferencia Bancaria / Depósito',
+        );
+      }
+
       if (mounted) {
         setState(() {
           _selectedImage = null;
@@ -187,7 +202,7 @@ class _DiezmosScreenState extends ConsumerState<DiezmosScreen>
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('¡Comprobante enviado exitosamente a Tesorería!'),
+            content: Text('¡Comprobante enviado con éxito! Se envió una constancia a tu correo.'),
             backgroundColor: AppColors.success,
           ),
         );
@@ -600,7 +615,7 @@ class _DiezmosScreenState extends ConsumerState<DiezmosScreen>
             titular: 'Alianza Chaclacayo',
             badge: 'Solo Ofrendas',
             note: '⚠️ Exclusivo para Ofrendas (no registrar diezmos por Yape).',
-            icon: Icons.qr_code_2,
+            icon: Icons.phone_android,
           ),
           const SizedBox(height: 32),
         ],

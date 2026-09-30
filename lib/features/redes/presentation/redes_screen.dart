@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../auth/data/auth_provider.dart';
+import 'asistencia_celula_screen.dart';
 
 class ChurchNetworkInfo {
   final String id;
@@ -410,15 +411,43 @@ class _RedesScreenState extends ConsumerState<RedesScreen> {
           const SizedBox(height: 4),
           _buildDetailItem(Icons.schedule, 'Horario: $schedule'),
           const SizedBox(height: 4),
-          _buildDetailItem(Icons.place, 'Zona: $zone'),
-          const SizedBox(height: 12),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton.icon(
-              onPressed: () => _openMap(zone),
-              icon: const Icon(Icons.location_searching, size: 16),
-              label: const Text('Ubicar en Maps', style: TextStyle(fontSize: 12)),
-            ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AsistenciaCelulaScreen(
+                          cellId: cell['id'].toString(),
+                          cellName: name,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.how_to_reg, size: 16),
+                  label: const Text('Tomar Asistencia'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 11),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              OutlinedButton.icon(
+                onPressed: () => _openMap(zone),
+                icon: const Icon(Icons.location_searching, size: 15),
+                label: const Text('Mapa'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                ),
+              ),
+            ],
           ),
         ],
       ),

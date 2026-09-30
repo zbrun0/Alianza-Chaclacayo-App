@@ -3,6 +3,10 @@ class AppConstants {
   static const String supabaseUrl = 'https://nnsqxguuefqixscmrrwd.supabase.co';
   static const String supabaseAnonKey = 'sb_publishable_g2EEJ25ATVGLcG4dbPH63Q_7eGXSd0Q';
 
+  // Resend API Configuration (Optional)
+  static const String resendApiKey = String.fromEnvironment('RESEND_API_KEY', defaultValue: '');
+  static const String resendFromEmail = 'Alianza Chaclacayo <onboarding@resend.dev>';
+
   // Church Information
   static const String churchName = 'Iglesia Alianza Cristiana y Misionera';
   static const String churchLocation = 'Chaclacayo, Lima - Perú';

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/services/resend_email_service.dart';
 import '../../auth/data/auth_provider.dart';
 
 class BookReading {
@@ -152,6 +153,15 @@ class _OracionScreenState extends ConsumerState<OracionScreen> {
         'content': content,
         'is_private': _isPrivate,
       });
+
+      if (user != null && user.email.isNotEmpty) {
+        ResendEmailService.sendPrayerRequestConfirmation(
+          to: user.email,
+          authorName: user.name,
+          title: content.length > 50 ? '${content.substring(0, 50)}...' : content,
+          category: _isPrivate ? 'Petición Confidencial Pastoral' : 'Muro de Intercesión General',
+        );
+      }
 
       if (mounted) {
         setState(() {
@@ -557,32 +567,30 @@ class _OracionScreenState extends ConsumerState<OracionScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: Checkbox(
-                    value: _isPrivate,
-                    onChanged: (val) => setState(() => _isPrivate = val ?? true),
-                    activeColor: AppColors.primary,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => _isPrivate = !_isPrivate),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.primaryContainer.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.primaryContainer.withValues(alpha: 0.2)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.lock, size: 16, color: AppColors.primary),
+                  const SizedBox(width: 8),
+                  Expanded(
                     child: Text(
-                      'Mantener petición privada (solo visible para pastores)',
+                      'Tu petición es confidencial y solo será leída por el Equipo Pastoral y de Intercesión.',
                       style: GoogleFonts.inter(
                         fontSize: 11,
-                        color: AppColors.onSurface,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             if (_submittedSuccess) ...[
               const SizedBox(height: 8),
@@ -697,7 +705,6 @@ class _OracionScreenState extends ConsumerState<OracionScreen> {
                 separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemBuilder: (context, index) {
                   final req = _requests[index];
-                  final isPriv = req['is_private'] == true;
                   final profiles = req['profiles'] as Map<String, dynamic>?;
                   final senderName = profiles != null
                       ? '${profiles['first_name'] ?? ''} ${profiles['last_name'] ?? ''}'.trim()
@@ -720,16 +727,16 @@ class _OracionScreenState extends ConsumerState<OracionScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(
-                                  isPriv ? Icons.lock_outline : Icons.public,
+                                const Icon(
+                                  Icons.lock_outline,
                                   size: 14,
                                   color: AppColors.primary,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  isPriv ? 'Privado ($senderName)' : senderName,
+                                  senderName,
                                   style: GoogleFonts.inter(
-                                    fontSize: 11,
+                                    fontSize: 11.5,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.primary,
                                   ),
