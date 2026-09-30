@@ -689,7 +689,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildFieldLabel('¿Estás bautizado/a en agua? *'),
+        _buildFieldLabel('¿Estás bautizado(a)? *'),
         Row(
           children: [
             Expanded(
@@ -794,7 +794,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    'Al no estar bautizado/a, no requieres ingresar cursos previos. Tu inicio formativo en la Academia ABC será con el curso Vida Abundante (Mi nueva Alianza con Dios).',
+                    'Al no estar bautizado(a), no requieres ingresar cursos previos. Tu inicio formativo en la Academia ABC será con el curso Vida Abundante.',
                     style: GoogleFonts.inter(
                       fontSize: 11.5,
                       color: const Color(0xFF1E40AF),

@@ -43,7 +43,7 @@ class UserProfile {
       birthDate: map['birth_date'] ?? '',
       isBaptized: map['is_baptized'] ?? false,
       maritalStatus: map['marital_status'] ?? 'Soltero/a',
-      assignedNetwork: map['assigned_network'] ?? 'dunamis',
+      assignedNetwork: map['assigned_network'] ?? 'none',
       role: map['role'] ?? 'miembro',
       isApproved: map['is_approved'] ?? false,
     );

@@ -59,6 +59,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
   }
 
   static const List<Map<String, String>> networksList = [
+    {'id': 'none', 'label': 'Sin red'},
     {'id': 'kids', 'label': 'Generación Kids'},
     {'id': 'next', 'label': 'NEXT (Pre-adolescentes)'},
     {'id': 'free', 'label': 'Free (Adolescentes)'},
@@ -140,7 +141,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
     try {
       final updateData = <String, dynamic>{'role': newRole};
       if (newNetwork != null && newNetwork.isNotEmpty) {
-        updateData['assigned_network'] = newNetwork;
+        updateData['assigned_network'] = newNetwork == 'none' ? null : newNetwork;
       }
       await client
           .from('profiles')
@@ -152,7 +153,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
         if (idx != -1) {
           _members[idx]['role'] = newRole;
           if (newNetwork != null && newNetwork.isNotEmpty) {
-            _members[idx]['assigned_network'] = newNetwork;
+            _members[idx]['assigned_network'] = newNetwork == 'none' ? null : newNetwork;
           }
         }
       });
@@ -177,15 +178,16 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
   Future<void> _updateMemberNetwork(String memberId, String newNetwork) async {
     final client = Supabase.instance.client;
     try {
+      final netVal = newNetwork == 'none' ? null : newNetwork;
       await client
           .from('profiles')
-          .update({'assigned_network': newNetwork})
+          .update({'assigned_network': netVal})
           .eq('id', memberId);
 
       setState(() {
         final idx = _members.indexWhere((m) => m['id'] == memberId);
         if (idx != -1) {
-          _members[idx]['assigned_network'] = newNetwork;
+          _members[idx]['assigned_network'] = netVal;
         }
       });
 
@@ -700,7 +702,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
     }
 
     final selectedRoles = Set<String>.from(initialRoles);
-    String selectedNetwork = member['assigned_network'] ?? 'dunamis';
+    String selectedNetwork = member['assigned_network'] ?? 'none';
     if (!networksList.any((n) => n['id'] == selectedNetwork)) {
       selectedNetwork = networksList.first['id']!;
     }
@@ -896,7 +898,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
   }
 
   void _showNetworkDialog(Map<String, dynamic> member) {
-    String currentNet = member['assigned_network'] ?? 'dunamis';
+    String currentNet = member['assigned_network'] ?? 'none';
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -1066,7 +1068,7 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
                           final phone = member['phone'] ?? '';
                           final email = member['email'] ?? '';
                           final role = member['role'] ?? 'miembro';
-                          final network = member['assigned_network'] ?? 'dunamis';
+                          final network = member['assigned_network'] ?? 'none';
 
                           final formattedRole = formatMemberRoles(role);
                           final netObj = networksList.firstWhere((n) => n['id'] == network, orElse: () => {'label': network});

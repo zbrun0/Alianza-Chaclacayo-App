@@ -14,6 +14,7 @@ class AppConstants {
 
   // Network Names Mapping
   static const Map<String, String> networkNames = {
+    'none': 'Sin Red',
     'dunamis': 'Dunamis (Jóvenes Adultos)',
     'next': 'NEXT (Adolescentes)',
     'free': 'Free (Universitarios)',

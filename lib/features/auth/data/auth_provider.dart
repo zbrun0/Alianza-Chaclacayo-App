@@ -172,7 +172,7 @@ class AuthNotifier extends Notifier<AuthState> {
           birthDate: meta['birth_date'] ?? '',
           isBaptized: meta['is_baptized'] ?? false,
           maritalStatus: meta['marital_status'] ?? 'Soltero/a',
-          assignedNetwork: meta['assigned_network'] ?? 'dunamis',
+          assignedNetwork: meta['assigned_network'] ?? 'none',
           role: 'miembro',
           isApproved: false,
         );
@@ -304,7 +304,7 @@ class AuthNotifier extends Notifier<AuthState> {
           'birth_date': birthDate.isEmpty ? '2000-01-01' : birthDate,
           'is_baptized': isBaptized,
           'marital_status': maritalStatus,
-          'assigned_network': assignedNetwork == 'none' ? null : assignedNetwork,
+          'assigned_network': (assignedNetwork == 'none' || assignedNetwork.trim().isEmpty) ? null : assignedNetwork,
           'custom_email': (email != null && email.trim().isNotEmpty) ? email.trim() : '',
           'past_courses': pastCourses,
         },

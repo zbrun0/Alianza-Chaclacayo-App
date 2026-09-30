@@ -178,12 +178,14 @@ class _RedesScreenState extends ConsumerState<RedesScreen> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(authStateProvider).userProfile;
-    final assignedNetworkId = user?.assignedNetwork ?? 'dunamis';
+    final rawNetworkId = user?.assignedNetwork ?? 'none';
+    final hasAssignedNetwork = rawNetworkId != 'none' &&
+        rawNetworkId.isNotEmpty &&
+        officialNetworks.any((n) => n.id == rawNetworkId);
 
-    final currentNet = officialNetworks.firstWhere(
-      (n) => n.id == assignedNetworkId,
-      orElse: () => officialNetworks[0],
-    );
+    final currentNet = hasAssignedNetwork
+        ? officialNetworks.firstWhere((n) => n.id == rawNetworkId)
+        : null;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -197,101 +199,163 @@ class _RedesScreenState extends ConsumerState<RedesScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Tarjeta Principal de la Red Asignada
-              Container(
-                padding: const EdgeInsets.all(22),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [currentNet.themeColor, currentNet.themeColor.withValues(alpha: 0.85)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: currentNet.themeColor.withValues(alpha: 0.3),
-                      blurRadius: 16,
-                      offset: const Offset(0, 6),
+              if (currentNet != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(22),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [currentNet.themeColor, currentNet.themeColor.withValues(alpha: 0.85)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: currentNet.themeColor.withValues(alpha: 0.3),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
                       ),
-                      child: Text(
-                        'MI RED ASIGNADA • ${currentNet.ageBracket.toUpperCase()}',
-                        style: GoogleFonts.inter(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 0.8,
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'MI RED ASIGNADA • ${currentNet.ageBracket.toUpperCase()}',
+                          style: GoogleFonts.inter(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 0.8,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      currentNet.name,
-                      style: GoogleFonts.plusJakartaSans(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      const SizedBox(height: 12),
+                      Text(
+                        currentNet.name,
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      currentNet.description,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.5,
-                        color: Colors.white.withValues(alpha: 0.9),
-                        height: 1.4,
+                      const SizedBox(height: 6),
+                      Text(
+                        currentNet.description,
+                        style: GoogleFonts.inter(
+                          fontSize: 12.5,
+                          color: Colors.white.withValues(alpha: 0.9),
+                          height: 1.4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 18),
+                const SizedBox(height: 18),
 
-              // Información Detallada de Reuniones (Sin encargado)
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
-                  borderRadius: BorderRadius.circular(22),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.02),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'DATOS DE LA REUNIÓN',
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.8,
-                        color: AppColors.primary,
+                // Información Detallada de Reuniones
+                Container(
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceContainerLowest,
+                    borderRadius: BorderRadius.circular(22),
+                    border: Border.all(color: const Color(0xFFE2E8F0)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.02),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
-                    ),
-                    const SizedBox(height: 14),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'DATOS DE LA REUNIÓN',
+                        style: GoogleFonts.inter(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.8,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
 
-                    _buildInfoRow(Icons.schedule, 'Horario de Reunión', currentNet.meetingTime),
-                    const Divider(height: 16),
-                    _buildInfoRow(Icons.place, 'Lugar de Encuentro', currentNet.location),
-                  ],
+                      _buildInfoRow(Icons.schedule, 'Horario de Reunión', currentNet.meetingTime),
+                      const Divider(height: 16),
+                      _buildInfoRow(Icons.place, 'Lugar de Encuentro', currentNet.location),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
+                const SizedBox(height: 20),
+              ] else ...[
+                // Banner cuando aún no tiene red
+                Container(
+                  padding: const EdgeInsets.all(22),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF1E293B), Color(0xFF334155)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF1E293B).withValues(alpha: 0.25),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'COMUNIDAD • BIENVENIDO',
+                          style: GoogleFonts.inter(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Aún no perteneces a una Red',
+                        style: GoogleFonts.plusJakartaSans(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'En Alianza Chaclacayo tenemos un espacio para cada etapa. Conoce nuestras redes ministeriales más abajo y acércate para unirte a una.',
+                        style: GoogleFonts.inter(
+                          fontSize: 12.5,
+                          color: Colors.white.withValues(alpha: 0.9),
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
 
               // Mi Célula / Grupo Pequeño (Solo la propia)
               Text(
