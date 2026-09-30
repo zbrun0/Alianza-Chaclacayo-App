@@ -30,7 +30,7 @@ class CurriculumSubject {
 
 const List<CurriculumSubject> abcCurriculum = [
   // --- NIVEL INICIAL ---
-  CurriculumSubject(code: 'A01', title: 'Mi nueva Alianza con Dios', level: 'inicial', prerequisites: [], duration: '4 meses'),
+  CurriculumSubject(code: 'A01', title: 'Vida Abundante', level: 'inicial', prerequisites: [], duration: '4 meses'),
   CurriculumSubject(code: 'A02', title: 'Comprometidos con Cristo y su iglesia', level: 'inicial', prerequisites: ['A01'], duration: '2 meses'),
   CurriculumSubject(code: 'A03', title: 'Comunión profunda', level: 'inicial', prerequisites: ['A02'], duration: '2 meses'),
 
@@ -2202,10 +2202,23 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
       final level = (c['level']?.toString() ?? 'inicial').toLowerCase();
       final isSpecial = level == 'especial' || c['is_special'] == true || c['requires_approval'] == true;
 
-      final code = c['code']?.toString() ?? '';
-      final isAlreadyApproved = approvedCodes.contains(code);
+      final code = (c['code']?.toString() ?? '').trim().toUpperCase();
+      final title = (c['title']?.toString() ?? '').trim().toLowerCase();
+      final isAlreadyApproved = approvedCodes.contains(code) ||
+          ((code == 'A01' || title.contains('vida abundante') || title.contains('nueva alianza')) &&
+           _approvedSubjects.any((s) {
+             final sCode = (s['subject_code']?.toString() ?? '').trim().toUpperCase();
+             final sTitle = (s['subject_title']?.toString() ?? '').trim().toLowerCase();
+             return sCode == 'A01' || sTitle.contains('vida abundante') || sTitle.contains('nueva alianza');
+           }));
 
-      // Si el alumno ya llevó y aprobó este curso previamente, se le permite volver a llevarlo en el nuevo ciclo
+      // El curso A01 (Vida Abundante) es de preparación bautismal y se cursa una sola vez
+      final isA01Course = code == 'A01' || title.contains('vida abundante') || title.contains('nueva alianza');
+      if (isA01Course && isAlreadyApproved) {
+        return false;
+      }
+
+      // Si el alumno ya llevó y aprobó cualquier otro curso previamente, se le permite volver a llevarlo en el nuevo ciclo
       if (isAlreadyApproved) return true;
 
       // Special courses are open to the entire church without prerequisites
@@ -2293,6 +2306,25 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
     if (isAlready) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Ya te encuentras matriculado en este curso.')),
+      );
+      return;
+    }
+
+    final cCode = (course['code']?.toString() ?? '').trim().toUpperCase();
+    final cTitle = (course['title']?.toString() ?? '').trim().toLowerCase();
+    final isA01 = cCode == 'A01' || cTitle.contains('vida abundante') || cTitle.contains('nueva alianza');
+    final hasA01Approved = _approvedSubjects.any((s) {
+      final code = (s['subject_code']?.toString() ?? '').trim().toUpperCase();
+      final title = (s['subject_title']?.toString() ?? '').trim().toLowerCase();
+      return code == 'A01' || title.contains('vida abundante') || title.contains('nueva alianza');
+    });
+
+    if (isA01 && hasA01Approved) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ya has llevado y aprobado el curso Vida Abundante previamente. Este curso es preparatorio para el bautismo y se realiza una sola vez.'),
+          backgroundColor: AppColors.error,
+        ),
       );
       return;
     }
