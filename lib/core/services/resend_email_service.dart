@@ -234,7 +234,7 @@ class ResendEmailService {
       <p style="font-size: 12.5px; color: #475569;">Puedes descargar e imprimir tu Diploma oficial en alta resolución desde el menú de <strong>Mi Historial</strong> en la aplicación móvil.</p>
     </div>
     <div class="footer">
-      Pastor Principal & Coordinación ABC • IACyM Chaclacayo
+      Academia Bíblica Cristiana (ABC) • IACyM Chaclacayo
     </div>
   </div>
 </body>

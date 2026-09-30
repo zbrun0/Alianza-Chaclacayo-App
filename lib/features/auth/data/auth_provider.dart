@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../../core/services/push_notification_service.dart';
 import 'user_model.dart';
 
 final supabaseClientProvider = Provider<SupabaseClient>((ref) {
@@ -150,6 +151,12 @@ class AuthNotifier extends Notifier<AuthState> {
           isLoading: false,
           isPasswordRecovery: isPasswordRecovery || state.isPasswordRecovery,
         );
+
+        // Sync FCM device token and subscribe to network topic
+        PushNotificationService.syncUserToken(userId);
+        if (profile.assignedNetwork.isNotEmpty) {
+          PushNotificationService.subscribeToNetwork(profile.assignedNetwork);
+        }
       } else {
         final meta = authUser.userMetadata ?? {};
         final firstName = meta['first_name'] ?? authUser.email?.split('@')[0] ?? 'Miembro';

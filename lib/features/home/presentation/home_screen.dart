@@ -1598,13 +1598,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () async {
-                        const downloadUrl = 'https://nnsqxguuefqixscmrrwd.supabase.co/storage/v1/object/public/app-downloads/alianza-chaclacayo.apk?download=alianza-chaclacayo.apk';
+                        const downloadUrl = 'https://github.com/zbrun0/Alianza-Chaclacayo-App/releases/latest/download/alianza-chaclacayo.apk';
                         final uri = Uri.parse(downloadUrl);
                         await launchUrl(uri, mode: LaunchMode.externalApplication);
                       },
                       icon: const Icon(Icons.download_rounded, size: 18),
                       label: Text(
-                        'Descargar APK Oficial (38 MB)',
+                        'Descargar APK Oficial (Android)',
                         style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
@@ -1624,7 +1624,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     TextButton.icon(
                       onPressed: () {
                         Clipboard.setData(const ClipboardData(
-                          text: 'https://nnsqxguuefqixscmrrwd.supabase.co/storage/v1/object/public/app-downloads/alianza-chaclacayo.apk?download=alianza-chaclacayo.apk',
+                          text: 'https://github.com/zbrun0/Alianza-Chaclacayo-App/releases/latest/download/alianza-chaclacayo.apk',
                         ));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

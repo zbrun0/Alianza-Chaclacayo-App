@@ -353,6 +353,14 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
                       );
                     }
 
+                    approved.sort((a, b) {
+                      final cA = (a['cycle'] ?? '').toString();
+                      final cB = (b['cycle'] ?? '').toString();
+                      final cmp = cA.compareTo(cB);
+                      if (cmp != 0) return cmp;
+                      return (a['subject_code'] ?? '').toString().compareTo((b['subject_code'] ?? '').toString());
+                    });
+
                     return Expanded(
                       child: ListView(
                         children: [
@@ -363,31 +371,9 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
                                 child: Container(
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primaryContainer.withValues(alpha: 0.15),
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        '${enrollments.length}',
-                                        style: GoogleFonts.plusJakartaSans(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.primary,
-                                        ),
-                                      ),
-                                      Text('Matriculados', style: GoogleFonts.inter(fontSize: 11, color: AppColors.primary)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
                                     color: const Color(0xFF16A34A).withValues(alpha: 0.12),
                                     borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(color: const Color(0xFF16A34A).withValues(alpha: 0.2)),
                                   ),
                                   child: Column(
                                     children: [
@@ -399,124 +385,296 @@ class _AdminMembersScreenState extends ConsumerState<AdminMembersScreen> {
                                           color: const Color(0xFF16A34A),
                                         ),
                                       ),
-                                      Text('Aprobados', style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF16A34A))),
+                                      Text('Cursos Aprobados', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w600, color: const Color(0xFF16A34A))),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryContainer.withValues(alpha: 0.15),
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '${enrollments.length}',
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                      Text('Matrículas Activas', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.primary)),
                                     ],
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'MATRÍCULAS Y CURSOS',
-                            style: GoogleFonts.inter(
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.8,
-                              color: AppColors.secondary,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          ...enrollments.map((enr) {
-                            final course = enr['courses'] as Map<String, dynamic>? ?? {};
-                            final title = course['title'] ?? 'Curso';
-                            final code = course['code'] ?? '';
-                            final cycle = course['cycle'] ?? '';
-                            final grade = enr['final_grade'];
-                            final att = enr['attendance_percentage'] ?? 100;
-                            final isAppr = enr['is_approved'] == true;
-                            final isCourseActive = course['is_active'] ?? true;
 
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF8FAFC),
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(color: const Color(0xFFE2E8F0)),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: isAppr
-                                          ? const Color(0xFF16A34A).withValues(alpha: 0.15)
-                                          : AppColors.primary.withValues(alpha: 0.1),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Icon(
-                                      isAppr ? Icons.check_circle : (isCourseActive ? Icons.play_circle_outline : Icons.cancel_outlined),
-                                      color: isAppr ? const Color(0xFF16A34A) : AppColors.primary,
-                                      size: 18,
-                                    ),
+                          // Sección 1: Historial de Cursos Aprobados
+                          if (approved.isNotEmpty) ...[
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                const Icon(Icons.verified, size: 16, color: Color(0xFF16A34A)),
+                                const SizedBox(width: 6),
+                                Text(
+                                  'HISTORIAL DE CURSOS APROBADOS (${approved.length})',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.8,
+                                    color: const Color(0xFF16A34A),
                                   ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '$code: $title',
-                                          style: GoogleFonts.plusJakartaSans(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                        if (cycle.isNotEmpty)
-                                          Text('Ciclo: $cycle', style: GoogleFonts.inter(fontSize: 11, color: AppColors.secondary)),
-                                        const SizedBox(height: 4),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Asistencia: $att%',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.w600,
-                                                color: att >= 80 ? const Color(0xFF16A34A) : AppColors.error,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 12),
-                                            Text(
-                                              'Nota: ${grade != null ? grade.toString() : "Pendiente"}',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.bold,
-                                                color: grade != null && grade >= 14
-                                                    ? const Color(0xFF16A34A)
-                                                    : (grade != null ? AppColors.error : Colors.grey[700]),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                    decoration: BoxDecoration(
-                                      color: isAppr
-                                          ? const Color(0xFF16A34A).withValues(alpha: 0.12)
-                                          : (isCourseActive ? const Color(0xFF0284C7).withValues(alpha: 0.12) : Colors.grey.withValues(alpha: 0.12)),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      isAppr ? 'APROBADO' : (isCourseActive ? 'EN CURSO' : 'FINALIZADO'),
-                                      style: TextStyle(
-                                        fontSize: 9.5,
-                                        fontWeight: FontWeight.bold,
-                                        color: isAppr
-                                            ? const Color(0xFF16A34A)
-                                            : (isCourseActive ? const Color(0xFF0284C7) : Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            ...approved.map((item) {
+                              final code = (item['subject_code'] ?? '').toString();
+                              final title = (item['subject_title'] ?? 'Curso').toString();
+                              final cycle = (item['cycle'] != null && item['cycle'].toString().isNotEmpty)
+                                  ? item['cycle'].toString()
+                                  : 'Histórico';
+                              final grade = item['grade'];
+                              final teacher = item['teacher_name']?.toString() ?? '';
+                              final approvedAt = item['approved_at']?.toString().split('T').first;
+
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF0FDF4),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(color: const Color(0xFFBBF7D0)),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF16A34A).withValues(alpha: 0.15),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.check_circle,
+                                        color: Color(0xFF16A34A),
+                                        size: 18,
                                       ),
                                     ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            code.isNotEmpty ? '$code: $title' : title,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.primary,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Wrap(
+                                            spacing: 12,
+                                            runSpacing: 4,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  const Icon(Icons.date_range, size: 12, color: AppColors.secondary),
+                                                  const SizedBox(width: 4),
+                                                  Text('Ciclo: $cycle', style: GoogleFonts.inter(fontSize: 11, color: AppColors.secondary)),
+                                                ],
+                                              ),
+                                              if (grade != null)
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Icon(Icons.grade, size: 12, color: Color(0xFF16A34A)),
+                                                    const SizedBox(width: 4),
+                                                    Text(
+                                                      'Nota: $grade',
+                                                      style: GoogleFonts.inter(
+                                                        fontSize: 11,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: const Color(0xFF16A34A),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              if (teacher.isNotEmpty)
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Icon(Icons.person_outline, size: 12, color: AppColors.secondary),
+                                                    const SizedBox(width: 4),
+                                                    Text('Prof: $teacher', style: GoogleFonts.inter(fontSize: 11, color: AppColors.secondary)),
+                                                  ],
+                                                ),
+                                              if (approvedAt != null)
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    const Icon(Icons.calendar_today_outlined, size: 11, color: Colors.grey),
+                                                    const SizedBox(width: 4),
+                                                    Text(approvedAt, style: GoogleFonts.inter(fontSize: 10, color: Colors.grey[600])),
+                                                  ],
+                                                ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF16A34A).withValues(alpha: 0.12),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: const Text(
+                                        'APROBADO',
+                                        style: TextStyle(
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF16A34A),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
+
+                          // Sección 2: Matrículas Registradas en el Sistema
+                          if (enrollments.isNotEmpty) ...[
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                const Icon(Icons.school, size: 16, color: AppColors.primary),
+                                const SizedBox(width: 6),
+                                Text(
+                                  'MATRÍCULAS EN EL SISTEMA (${enrollments.length})',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.8,
+                                    color: AppColors.secondary,
                                   ),
-                                ],
-                              ),
-                            );
-                          }),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            ...enrollments.map((enr) {
+                              final course = enr['courses'] as Map<String, dynamic>? ?? {};
+                              final title = course['title'] ?? 'Curso';
+                              final code = course['code'] ?? '';
+                              final cycle = course['cycle'] ?? '';
+                              final grade = enr['final_grade'];
+                              final att = enr['attendance_percentage'] ?? 100;
+                              final isAppr = enr['is_approved'] == true;
+                              final isCourseActive = course['is_active'] ?? true;
+
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF8FAFC),
+                                  borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: isAppr
+                                            ? const Color(0xFF16A34A).withValues(alpha: 0.15)
+                                            : AppColors.primary.withValues(alpha: 0.1),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        isAppr ? Icons.check_circle : (isCourseActive ? Icons.play_circle_outline : Icons.cancel_outlined),
+                                        color: isAppr ? const Color(0xFF16A34A) : AppColors.primary,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '$code: $title',
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.primary,
+                                            ),
+                                          ),
+                                          if (cycle.isNotEmpty)
+                                            Text('Ciclo: $cycle', style: GoogleFonts.inter(fontSize: 11, color: AppColors.secondary)),
+                                          const SizedBox(height: 4),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Asistencia: $att%',
+                                                style: GoogleFonts.inter(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: att >= 80 ? const Color(0xFF16A34A) : AppColors.error,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 12),
+                                              Text(
+                                                'Nota: ${grade != null ? grade.toString() : "Pendiente"}',
+                                                style: GoogleFonts.inter(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: grade != null && grade >= 14
+                                                      ? const Color(0xFF16A34A)
+                                                      : (grade != null ? AppColors.error : Colors.grey[700]),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                      decoration: BoxDecoration(
+                                        color: isAppr
+                                            ? const Color(0xFF16A34A).withValues(alpha: 0.12)
+                                            : (isCourseActive ? const Color(0xFF0284C7).withValues(alpha: 0.12) : Colors.grey.withValues(alpha: 0.12)),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Text(
+                                        isAppr ? 'APROBADO' : (isCourseActive ? 'EN CURSO' : 'FINALIZADO'),
+                                        style: TextStyle(
+                                          fontSize: 9.5,
+                                          fontWeight: FontWeight.bold,
+                                          color: isAppr
+                                              ? const Color(0xFF16A34A)
+                                              : (isCourseActive ? const Color(0xFF0284C7) : Colors.grey[700]),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
                         ],
                       ),
                     );

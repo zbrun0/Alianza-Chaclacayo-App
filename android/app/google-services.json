@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "263512120459",
+    "project_id": "alianza-chaclacayo",
+    "storage_bucket": "alianza-chaclacayo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263512120459:android:2506a597b68a5d80b6488e",
+        "android_client_info": {
+          "package_name": "pe.alianzachaclacayo.alianza_chaclacayo_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDza9MhaU-WWFefnDUH3JNJeHNFB9tjJgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

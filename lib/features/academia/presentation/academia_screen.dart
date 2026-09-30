@@ -2203,7 +2203,10 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
       final isSpecial = level == 'especial' || c['is_special'] == true || c['requires_approval'] == true;
 
       final code = c['code']?.toString() ?? '';
-      if (approvedCodes.contains(code)) return false;
+      final isAlreadyApproved = approvedCodes.contains(code);
+
+      // Si el alumno ya llevó y aprobó este curso previamente, se le permite volver a llevarlo en el nuevo ciclo
+      if (isAlreadyApproved) return true;
 
       // Special courses are open to the entire church without prerequisites
       if (isSpecial) return true;
@@ -4087,6 +4090,7 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
     final isVirtualCourse = course['is_virtual'] == true;
     final isEnrolledInThis = _userEnrollments.any((e) => e['course_id'] == course['id'] && e['status'] == 'aprobado');
     final isPendingThis = _userEnrollments.any((e) => e['course_id'] == course['id'] && e['status'] == 'pendiente');
+    final isPreviouslyApproved = _approvedSubjects.any((s) => s['subject_code']?.toString() == course['code']?.toString());
     final conflict = _getScheduleConflict(course);
 
     return Container(
@@ -4216,6 +4220,28 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
               color: AppColors.primary,
             ),
           ),
+          if (isPreviouslyApproved) ...[
+            const SizedBox(height: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF0FDF4),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: const Color(0xFFBBF7D0)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.check_circle_outline, size: 13, color: Color(0xFF16A34A)),
+                  const SizedBox(width: 5),
+                  Text(
+                    'Ya lo aprobaste anteriormente • Puedes volver a llevarlo',
+                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF15803D)),
+                  ),
+                ],
+              ),
+            ),
+          ],
           if (isSpecialCourse) ...[
             const SizedBox(height: 4),
             Text(
@@ -4357,8 +4383,14 @@ class _AcademiaScreenState extends ConsumerState<AcademiaScreen>
                 await _enrollInCourse(course);
                 onEnrolled?.call();
               },
-              icon: Icon(isSpecialCourse ? Icons.send_rounded : Icons.check_circle_outline, size: 18),
-              label: Text(isSpecialCourse ? 'Solicitar Inscripción Especial' : 'Matricularme en este Curso'),
+              icon: Icon(isSpecialCourse ? Icons.send_rounded : (isPreviouslyApproved ? Icons.replay : Icons.check_circle_outline), size: 18),
+              label: Text(
+                isSpecialCourse
+                    ? 'Solicitar Inscripción Especial'
+                    : (isPreviouslyApproved
+                        ? 'Volver a Matricularme en este Curso'
+                        : 'Matricularme en este Curso'),
+              ),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 44),
                 backgroundColor: isSpecialCourse ? const Color(0xFFD97706) : AppColors.primary,

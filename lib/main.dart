@@ -11,6 +11,8 @@ import 'features/auth/presentation/login_screen.dart';
 import 'features/auth/presentation/reset_password_screen.dart';
 import 'features/navigation/presentation/main_scaffold.dart';
 
+import 'core/services/push_notification_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -22,6 +24,9 @@ void main() async {
     url: AppConstants.supabaseUrl,
     publishableKey: AppConstants.supabaseAnonKey,
   );
+
+  // Initialize Firebase and Native Push Notifications
+  await PushNotificationService.initialize();
 
   runApp(
     const ProviderScope(

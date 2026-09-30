@@ -154,75 +154,27 @@ class CertificateGenerator {
                       ],
                     ),
 
-                    // Footer with signatures and date
-                    pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    // Footer with date and academic cycle
+                    pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
                       children: [
-                        pw.Padding(
-                          padding: const pw.EdgeInsets.only(left: 30),
-                          child: pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.center,
-                            children: [
-                              pw.Container(
-                                width: 140,
-                                height: 1,
-                                color: PdfColors.white,
-                              ),
-                              pw.SizedBox(height: 4),
-                              pw.Text(
-                                'Pastor Principal',
-                                style: const pw.TextStyle(color: PdfColors.white, fontSize: 9),
-                              ),
-                              pw.Text(
-                                'IACyM Chaclacayo',
-                                style: pw.TextStyle(color: PdfColor.fromHex('94A3B8'), fontSize: 8),
-                              ),
-                            ],
+                        pw.Text(
+                          'Chaclacayo, $dateFormatted',
+                          style: const pw.TextStyle(
+                            color: PdfColors.white,
+                            fontSize: 10,
                           ),
                         ),
-                        pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.center,
-                          children: [
-                            pw.Text(
-                              'Chaclacayo, $dateFormatted',
-                              style: const pw.TextStyle(
-                                color: PdfColors.white,
-                                fontSize: 10,
-                              ),
+                        if (cycleCode != null && cycleCode.isNotEmpty) ...[
+                          pw.SizedBox(height: 3),
+                          pw.Text(
+                            'Ciclo Académico: $cycleCode',
+                            style: pw.TextStyle(
+                              color: PdfColor.fromHex('DAE2FB'),
+                              fontSize: 9,
                             ),
-                            if (cycleCode != null && cycleCode.isNotEmpty)
-                              pw.Text(
-                                'Ciclo Académico: $cycleCode',
-                                style: pw.TextStyle(
-                                  color: PdfColor.fromHex('DAE2FB'),
-                                  fontSize: 8,
-                                ),
-                              ),
-                          ],
-                        ),
-                        pw.Padding(
-                          padding: const pw.EdgeInsets.only(right: 30),
-                          child: pw.Column(
-                            crossAxisAlignment: pw.CrossAxisAlignment.center,
-                            children: [
-                              pw.Container(
-                                width: 140,
-                                height: 1,
-                                color: PdfColors.white,
-                              ),
-                              pw.SizedBox(height: 4),
-                              pw.Text(
-                                'Coordinación Académica',
-                                style: const pw.TextStyle(color: PdfColors.white, fontSize: 9),
-                              ),
-                              pw.Text(
-                                'Academia ABC',
-                                style: pw.TextStyle(color: PdfColor.fromHex('94A3B8'), fontSize: 8),
-                              ),
-                            ],
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ],
